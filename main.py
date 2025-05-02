@@ -47,7 +47,7 @@ zipimg = "https://i.postimg.cc/C5T2SN20/photo-2025-04-02-18-19-12.jpg"
 
 watermark_text = "𝙇𝙐𝘾𝙄𝙁𝙀𝙍 💀"
 credit =("𝙇𝙐𝘾𝙄𝙁𝙀𝙍 💀") 
-OWNER = int(os.environ.get("OWNER",2607963795))
+OWNER = int(os.environ.get("OWNER",7764674199))
 try: 
     ADMINS=[7764674199] 
     for x in (os.environ.get("ADMINS", "7764674199").split()):  
