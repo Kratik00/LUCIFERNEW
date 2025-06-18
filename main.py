@@ -142,7 +142,7 @@ keyboard = InlineKeyboardMarkup(
                 [
                     InlineKeyboardButton("📞 Cᴏɴᴛᴀᴄᴛ " ,url=f"https://t.me/URS_LUCIFER"), InlineKeyboardButton("🥷 Oᴡɴᴇʀ ", url="https://t.me/LP_LUCIFER") ],
                     [
-                    InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ " ,url="https://t.me/ASHI_07") ],                              
+                    InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ " ,url="https://t.me/URS_LUCIFER") ],                              
                 ],           
 
       )
@@ -677,7 +677,7 @@ async def upload(bot: Client, m: Message):
         await m.reply_text("**🚫You are not authorized to use this bot.**")
         return
 
-    editable = await m.reply_text("**𝗧𝗢𝗧𝗔𝗟 𝗟𝗜𝗡𝗞𝗦 𝗙𝗢𝗨𝗡𝗗 𝗜𝗡 𝗧𝗫𝗧 𝗙𝗜𝗟𝗘 𝗔𝗥𝗘 ⚔️**")
+    editable = await m.reply_text("**SEND ME YOUR TXT FILE🙄**")
     input: Message = await bot.listen(editable.chat.id)
     y = await input.download()
     file_name, ext = os.path.splitext(os.path.basename(y))  # Extract filename & extension
@@ -864,16 +864,16 @@ async def upload(bot: Client, m: Message):
                 url = url.split("bcov_auth")[0]+bcov
               
             elif "tencdn.classplusapp" in url:
-                headers = {'Host': 'api.classplusapp.com', 'x-access-token': f'{token_cp}', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
+                headers = {'Host': 'api.classplusapp.com', 'x-access-token': f'{raw_text4}', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
                 params = (('url', f'{url}'))
                 response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
                 url = response.json()['url']  
 
             elif 'videos.classplusapp' in url:
-                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': f'{token_cp}'}).json()['url']
+                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': f'{raw_text4}'}).json()['url']
             
             elif 'media-cdn.classplusapp.com' in url or 'media-cdn-alisg.classplusapp.com' in url or 'media-cdn-a.classplusapp.com' in url: 
-                headers = { 'x-access-token': f'{token_cp}',"X-CDN-Tag": "empty"}
+                headers = { 'x-access-token': f'{raw_text4}',"X-CDN-Tag": "empty"}
                 response = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers=headers)
                 url   = response.json()['url']
 
