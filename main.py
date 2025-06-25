@@ -1039,12 +1039,12 @@ async def upload(bot: Client, m: Message):
                         photo=f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
                         caption=capt,
                         parse_mode="HTML",
-                        reply_markup=InlineKeyboardMarkup(
-                          [[InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)]]
-                          [[InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]]
-                        )
+                        reply_markup=InlineKeyboardMarkup([
+                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)]
+                          [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
+                        ])
                       ) 
-                        count += 1
+                      count += 1
                    except Exception as e:
                      await m.reply_text(str(e))
                      await asyncio.sleep(1)
