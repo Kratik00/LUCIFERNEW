@@ -261,9 +261,6 @@ BUTTONS = InlineKeyboardMarkup([
    
     [InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ ", url="https://t.me/URS_LUCIFER")],
 ])
-BUTTONS1 = InlineKeyboardMarkup([
-    [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/URS_LUCIFER")]
-    ])
 #=================== TELEGRAM ID INFORMATION =============
 
 @bot.on_message(filters.private & filters.command("info"))
@@ -941,7 +938,7 @@ async def upload(bot: Client, m: Message):
                         cmd = f'yt-dlp -o "{name}.zip" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.zip', caption=cc1, reply_markup=BUTTONS1)
+                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.zip', caption=cc1)
                         count += 1
                         os.remove(f'{name}.zip')
                     except FloodWait as e:
@@ -954,7 +951,7 @@ async def upload(bot: Client, m: Message):
                             pdf_key = url.split('*')[1]
                             url = url.split('*')[0]
                             pdf_enc = await helper.download_and_decrypt_pdf(url, name, pdf_key)
-                            copy = await bot.send_document(chat_id=m.chat.id, document=pdf_enc, caption=cc1, reply_markup=BUTTONS1)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                            copy = await bot.send_document(chat_id=m.chat.id, document=pdf_enc, caption=cc1)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                             count += 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                             os.remove(pdf_enc)
                             continue
@@ -978,7 +975,7 @@ async def upload(bot: Client, m: Message):
                                     with open(f'{name}.pdf', 'wb') as file:
                                         file.write(response.content)
                                     await asyncio.sleep(retry_delay)  # Optional, to prevent spamming
-                                    copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1, reply_markup=BUTTONS1)
+                                    copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1)
                                     count += 1
                                     os.remove(f'{name}.pdf')
                                     success = True
@@ -1000,7 +997,7 @@ async def upload(bot: Client, m: Message):
                             cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                             download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                             os.system(download_cmd)
-                            copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1, reply_markup=BUTTONS1)
+                            copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1)
                             count += 1
                             os.remove(f'{name}.pdf')
                         except FloodWait as e:
@@ -1016,8 +1013,7 @@ async def upload(bot: Client, m: Message):
                             await bot.send_photo(
                                 chat_id=m.chat.id,
                                 caption = cc2,
-                                photo= f'{name}.jpg',
-                                reply_markup=BUTTONS1,)
+                                photo= f'{name}.jpg',)
                         except subprocess.CalledProcessError:
                             await message.reply("Failed to download the image. Please check the URL.")
                         except Exception as e:
@@ -1052,7 +1048,7 @@ async def upload(bot: Client, m: Message):
                         try : 
                             await helper.pdf_download(f"{api_url}utkash-ws?url={url}&authorization={api_token}",f"{name}.html")
                             time.sleep(1)
-                            await bot.send_document(chat_id=m.chat.id, document=f"{name}.html", caption=cc1, reply_markup=BUTTONS1)
+                            await bot.send_document(chat_id=m.chat.id, document=f"{name}.html", caption=cc1)
                             os.remove(f'{name}.html')
                             count += 1
                             time.sleep(5)
