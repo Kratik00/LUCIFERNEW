@@ -259,7 +259,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 BUTTONS = InlineKeyboardMarkup([
     [InlineKeyboardButton("📞 Cᴏɴᴛᴀᴄᴛ ", url="https://t.me/URS_LUCIFER"), InlineKeyboardButton("🥷 Oᴡɴᴇʀ ", url="https://t.me/LP_LUCIFER")],
    
-    [InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ ", url="https://t.me/ASHI_07")],
+    [InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ ", url="https://t.me/URS_LUCIFER")],
 ])
 BUTTONS1 = InlineKeyboardMarkup([
     [InlineKeyboardButton("🕹 SOURCE URL ", url=url)]
@@ -857,7 +857,7 @@ async def upload(bot: Client, m: Message):
                 url = url.split("bcov_auth")[0]+bcov 
               
             elif "classplusapp.com/drm/" in url:
-                url = 'https://dragoapi.vercel.app/classplus?link=' + url
+                url = f"https://key-one-gamma.vercel.app/api?url={url}&token={raw_text4}"
                 mpd, keys = helper.get_mps_and_keys(url)
                 url = mpd
                 keys_string = " ".join([f"--key {key}" for key in keys])
