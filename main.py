@@ -262,9 +262,8 @@ BUTTONS = InlineKeyboardMarkup([
     [InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ ", url="https://t.me/URS_LUCIFER")],
 ])
 BUTTONS1 = InlineKeyboardMarkup([
-    [InlineKeyboardButton("🕹 SOURCE URL ", url=url)]
-    [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
-])
+    [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/URS_LUCIFER)]
+    ])
 #=================== TELEGRAM ID INFORMATION =============
 
 @bot.on_message(filters.private & filters.command("info"))
