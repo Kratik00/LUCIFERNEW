@@ -1032,14 +1032,14 @@ async def upload(bot: Client, m: Message):
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                      capt = f'**[🎥] 𝗩𝗶𝗱_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n🕹𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.({res}).LUCIFER.mp4\n\n\n📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n🚀 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {MR}**'
+                      capt = f'<b>[🎥] Vid_Id: {str(count).zfill(3)}</b>\n\n<b>Title:</b> {name1}.({res}).LUCIFER.mp4\n\n<b>Batch:</b> {b_name}\n\n🚀 <b>Extracted By:</b> {MR}'
                       await bot.send_photo(
                         m.chat.id,
                         photo=f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
                         caption=capt,
                         parse_mode="HTML",
                         reply_markup=InlineKeyboardMarkup([
-                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)]
+                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
                           [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
                         ])
                       ) 
