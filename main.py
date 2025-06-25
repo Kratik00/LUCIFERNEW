@@ -262,7 +262,7 @@ BUTTONS = InlineKeyboardMarkup([
     [InlineKeyboardButton("🏦 Cʜᴀɴɴᴇʟ ", url="https://t.me/URS_LUCIFER")],
 ])
 BUTTONS1 = InlineKeyboardMarkup([
-    [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/URS_LUCIFER)]
+    [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/URS_LUCIFER")]
     ])
 #=================== TELEGRAM ID INFORMATION =============
 
