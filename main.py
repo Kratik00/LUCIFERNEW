@@ -996,23 +996,18 @@ async def upload(bot: Client, m: Message):
                         for msg in failure_msgs:
                             await msg.delete()
                    
-                        else:
+                    else:
+                        try:
                             cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                             download_cmd = f"{cmd} -R 25 --fragment-retries 25"
-                            # os.system(download_cmd)
-                            # file_path= f'{name}.pdf'
-                            # new_file_path = await helper.watermark_pdf(file_path, watermark_text)
-                            # copy = await bot.send_document(chat_id=m.chat.id, document=new_file_path, caption=cc1)
-                            os.system(download_cmd)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-                            copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1, reply_markup=BUTTONS1) 
-                            count +=1
-                            # os.remove(new_file_path)
+                            os.system(download_cmd)
+                            copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1, reply_markup=BUTTONS1)
+                            count += 1
                             os.remove(f'{name}.pdf')
-                            
-                    except FloodWait as e:
-                        await m.reply_text(str(e))
-                        time.sleep(e.x)
-                        continue 
+                        except FloodWait as e:
+                            await m.reply_text(str(e))
+                            time.sleep(e.x)
+                            continue
                         
 
 
