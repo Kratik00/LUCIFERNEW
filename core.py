@@ -306,7 +306,7 @@ async def send_doc(bot: Client, m: Message,cc,ka,cc1,prog,count,name,reply_marku
     reply = await m.reply_text(f"Uploading - `{name}`")   
     time.sleep(1)   
     start_time = time.time()   
-    await m.reply_document(ka,caption=cc1)   
+    await m.reply_document(ka,caption=cc1, reply_markup=None)   
     count+=1   
     await reply.delete (True)   
     time.sleep(1)   
@@ -397,9 +397,9 @@ async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog, reply_ma
     start_time = time.time()   
    
     try:   
-        await m.reply_video(filename,caption=cc, supports_streaming=True,height=720,width=1280,thumb=thumbnail,duration=dur, progress=progress_bar,progress_args=(reply,start_time))   
+        await m.reply_video(filename,caption=cc, supports_streaming=True,height=720,width=1280,thumb=thumbnail,duration=dur, progress=progress_bar,progress_args=(reply,start_time),reply_markup=None)   
     except Exception:   
-        await m.reply_document(filename,caption=cc, progress=progress_bar,progress_args=(reply,start_time))   
+        await m.reply_document(filename,caption=cc, progress=progress_bar,progress_args=(reply,start_time),reply_markup=None)   
     os.remove(filename)   
    
     os.remove(f"{filename}.jpg")
