@@ -302,7 +302,7 @@ async def download_video(url,cmd, name):
     except FileNotFoundError as exc:   
         return os.path.isfile.splitext[0] + "." + "mp4"   
    
-async def send_doc(bot: Client, m: Message,cc,ka,cc1,prog,count,name):   
+async def send_doc(bot: Client, m: Message,cc,ka,cc1,prog,count,name,reply_markup= None):   
     reply = await m.reply_text(f"Uploading - `{name}`")   
     time.sleep(1)   
     start_time = time.time()   
@@ -377,7 +377,7 @@ def get_next_emoji():
     return emoji
 
 
-async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog):   
+async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog, reply_markup=None):   
        
     emoji = get_next_emoji()
     subprocess.run(f'ffmpeg -i "{filename}" -ss 00:00:02 -vframes 1 "{filename}.jpg"', shell=True)   
