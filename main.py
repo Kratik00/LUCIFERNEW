@@ -1038,23 +1038,18 @@ async def upload(bot: Client, m: Message):
                           f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
                           f"https://img.youtube.com/vi/{video_id}/default.jpg"
                       ]
-
-                      thumb_found = False
-                      img = None
+                       
                       async with aiohttp.ClientSession() as session:
                         for thumb_url in thumbs:
                           async with session.get(thumb_url) as resp:
                             if resp.status == 200:
-                               img = io.BytesIO(await resp.read())
-                               img.seek(0)
-                               img.name = "yt_thumb.jpg"
-                               thumb_found = True
+                               final_thumb=thumb_url
                                break
 
                       if thumb_found:
                          await bot.send_photo(
                            m.chat.id,
-                           photo=InputFile(img),
+                           photo=final_thumb,
                            caption=capt,
                            reply_markup=InlineKeyboardMarkup([
                              [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
