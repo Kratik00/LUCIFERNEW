@@ -1024,7 +1024,7 @@ async def upload(bot: Client, m: Message):
                                 os.remove(f'{name}.jpg')         
 
                         
-                elif "youtu" in url
+                elif "youtu" in url:
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
@@ -1040,8 +1040,9 @@ async def upload(bot: Client, m: Message):
                         ])
                       ) 
                       count += 1
+                      await asyncio.sleep(2)
                    except Exception as e:
-                     await m.reply_text(str(e))
+                     await m.reply_text(f"❌️ ERROR: {str(e)}")
                      await asyncio.sleep(1)
                      continue     
                 elif ".ws" in url and  url.endswith(".ws"):
