@@ -1023,7 +1023,7 @@ async def upload(bot: Client, m: Message):
                                 os.remove(f'{name}.jpg')         
 
                         
-                                elif "youtu" in url:Add commentMore actions
+                elif "youtu" in url:
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
