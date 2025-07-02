@@ -38,7 +38,7 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
 from pyrogram.types.messages_and_media import message
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputFile
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 cookies_file_path = os.getenv("COOKIES_FILE_PATH", "youtube_cookies.txt")
 
 pwimg = "https://graph.org/file/8add8d382169e326f67e0-3bf38f92e52955e977.jpg"
@@ -1024,55 +1024,26 @@ async def upload(bot: Client, m: Message):
                                 os.remove(f'{name}.jpg')         
 
                         
-                elif "youtu" in url:
+                elif "youtu" in url
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
-
+                      imageo = "https://graph.org/file/8a6780e07f3e8002dd4f7-e94f14fd1683849a5f.jpg"
                       capt = f'<b>[🎥] Vid_Id: {str(count).zfill(3)}</b>\n\n<b>Title:</b> {name1}.({res}).LUCIFER.mp4\n\n<b>Batch:</b> {b_name}\n\n🚀 <b>Extracted By:</b> {MR}'
-
-                      thumbs = [
-                          f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
-                          f"https://img.youtube.com/vi/{video_id}/sddefault.jpg",
-                          f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
-                          f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
-                          f"https://img.youtube.com/vi/{video_id}/default.jpg"
-                      ]
-
-                      thumb_found = False
-                      img = None
-                      async with aiohttp.ClientSession() as session:
-                        for thumb_url in thumbs:
-                          async with session.get(thumb_url) as resp:
-                            if resp.status == 200:
-                               img_bytes = await resp.read()
-                               if len(img_bytes) > 0:
-                                  img = io.BytesIO(img_bytes)
-                                  img.name = "yt_thumb.jpg"
-                                  img.seek(0)
-                                  thumb_found = True
-                                  break
-
-                      if thumb_found:
-                         await bot.send_photo(
-                           m.chat.id,
-                           photo=InputFile(img),
-                           caption=capt,
-                           reply_markup=InlineKeyboardMarkup([
-                             [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
-                             [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
-                           ])
-                          )
-                      else:
-                        await m.reply_text("❌ No valid thumbnail found.")
-
+                      await bot.send_photo(
+                        m.chat.id,
+                        photo=imageo,
+                        caption=capt,
+                        reply_markup=InlineKeyboardMarkup([
+                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
+                          [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
+                        ])
+                      ) 
                       count += 1
-                      await asyncio.sleep(3)
-
                    except Exception as e:
-                     await m.reply_text(f"❌ Error: {str(e)}")
-                     await asyncio.sleep(2)
-                     continue 
+                     await m.reply_text(str(e))
+                     await asyncio.sleep(1)
+                     continue     
                 elif ".ws" in url and  url.endswith(".ws"):
                         try : 
                             await helper.pdf_download(f"{api_url}utkash-ws?url={url}&authorization={api_token}",f"{name}.html")
