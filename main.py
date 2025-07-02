@@ -1046,19 +1046,16 @@ async def upload(bot: Client, m: Message):
                                final_thumb=thumb_url
                                break
 
-                      if thumb_found:
-                         await bot.send_photo(
-                           m.chat.id,
-                           photo=final_thumb,
-                           caption=capt,
-                           reply_markup=InlineKeyboardMarkup([
-                             [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
-                             [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
-                           ])
-                          )
-                      else:
-                        await m.reply_text("❌ No valid thumbnail found.")
-
+                    
+                      await bot.send_photo(
+                        m.chat.id,
+                        photo=final_thumb,
+                        caption=capt,
+                        reply_markup=InlineKeyboardMarkup([
+                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
+                          [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
+                        ])
+                      )
                       count += 1
                       await asyncio.sleep(3)
 
