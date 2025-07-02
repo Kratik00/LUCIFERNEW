@@ -1045,11 +1045,13 @@ async def upload(bot: Client, m: Message):
                         for thumb_url in thumbs:
                           async with session.get(thumb_url) as resp:
                             if resp.status == 200:
-                               img = io.BytesIO(await resp.read())
-                               img.seek(0)
-                               img.name = "yt_thumb.jpg"
-                               thumb_found = True
-                               break
+                               img_bytes = await resp.read()
+                               if len(img_bytes) > 0:
+                                  img = io.BytesIO(img_bytes)
+                                  img.name = "yt_thumb.jpg"
+                                  img.seek(0)
+                                  thumb_found = True
+                                  break
 
                       if thumb_found:
                          await bot.send_photo(
