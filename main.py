@@ -1028,7 +1028,7 @@ async def upload(bot: Client, m: Message):
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                      imageo = "https://graph.org/file/8a6780e07f3e8002dd4f7-e94f14fd1683849a5f.jpg"
+                      imageo = "https://ibb.co/d0BPDCb2"
                       capt = f'<b>[🎥] Vid_Id: {str(count).zfill(3)}</b>\n\n<b>Title:</b> {name1}.({res}).LUCIFER.mp4\n\n<b>Batch:</b> {b_name}\n\n🚀 <b>Extracted By:</b> {MR}'
                       await bot.send_photo(
                         m.chat.id,
