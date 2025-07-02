@@ -1028,23 +1028,49 @@ async def upload(bot: Client, m: Message):
                    try:
                       video_id = url.split("embed/")[-1].split("?")[0].strip()
                       watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                      imageo = "https://i.ibb.co/TBc4tjK8/IMG-20250702-225503-854.jpg"
+
                       capt = f'<b>[🎥] Vid_Id: {str(count).zfill(3)}</b>\n\n<b>Title:</b> {name1}.({res}).LUCIFER.mp4\n\n<b>Batch:</b> {b_name}\n\n🚀 <b>Extracted By:</b> {MR}'
-                      await bot.send_photo(
-                        m.chat.id,
-                        photo=imageo,
-                        caption=capt,
-                        reply_markup=InlineKeyboardMarkup([
-                          [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
-                          [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
-                        ])
-                      ) 
+
+                      thumbs = [
+                          f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg",
+                          f"https://img.youtube.com/vi/{video_id}/sddefault.jpg",
+                          f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
+                          f"https://img.youtube.com/vi/{video_id}/mqdefault.jpg",
+                          f"https://img.youtube.com/vi/{video_id}/default.jpg"
+                      ]
+
+                      thumb_found = False
+                      img = None
+                      async with aiohttp.ClientSession() as session:
+                        for thumb_url in thumbs:
+                          async with session.get(thumb_url) as resp:
+                            if resp.status == 200:
+                               img = io.BytesIO(await resp.read())
+                               img.seek(0)
+                               img.name = "yt_thumb.jpg"
+                               thumb_found = True
+                               break
+
+                      if thumb_found:
+                         await bot.send_photo(
+                           m.chat.id,
+                           photo=InputFile(img),
+                           caption=capt,
+                           reply_markup=InlineKeyboardMarkup([
+                             [InlineKeyboardButton("▶️ CLICK HERE TO WATCH 🚀", url=watch_url)],
+                             [InlineKeyboardButton("🎭 STAY CONNECTED ", url="https://t.me/urs_lucifer")]
+                           ])
+                          )
+                      else:
+                        await m.reply_text("❌ No valid thumbnail found.")
+
                       count += 1
-                      await asyncio.sleep(2)
+                      await asyncio.sleep(3)
+
                    except Exception as e:
-                     await m.reply_text(f"❌️ ERROR: {str(e)}")
-                     await asyncio.sleep(1)
-                     continue     
+                     await m.reply_text(f"❌ Error: {str(e)}")
+                     await asyncio.sleep(2)
+                     continue      
                 elif ".ws" in url and  url.endswith(".ws"):
                         try : 
                             await helper.pdf_download(f"{api_url}utkash-ws?url={url}&authorization={api_token}",f"{name}.html")
