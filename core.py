@@ -28,23 +28,44 @@ from pytube import Playlist  #Youtube Playlist Extractor
 from yt_dlp import YoutubeDL
 import yt_dlp as youtube_dl
 
-topic_cache = {}  # Store thread_name -> message_thread_id mapping
+
+from pyrogram import Client
+from pyrogram.types import ForumTopic
+
+# Global thread cache
+topic_cache = {}
 
 async def get_or_create_topic(bot: Client, chat_id: int, thread_name: str) -> int:
+    """
+    Forum group mein subject (thread_name) ke naam se thread dhoondo.
+    Agar exist karta hai to uska ID return karo.
+    Agar nahi milta to naya thread banao aur return karo.
+    """
+
+    # 1. Pehle cache check karo
     if thread_name in topic_cache:
         return topic_cache[thread_name]
 
-    # Get all threads
-    threads = await bot.get_forum_topic_list(chat_id)
-    for t in threads:
-        if t.name == thread_name:
-            topic_cache[thread_name] = t.message_thread_id
-            return t.message_thread_id
+    # 2. Existing topics fetch karo
+    try:
+        topics = await bot.get_forum_topic_list(chat_id)
+        for t in topics:
+            if t.name == thread_name:
+                topic_cache[thread_name] = t.message_thread_id
+                return t.message_thread_id
+    except Exception as e:
+        print(f"⚠️ Error fetching topic list: {e}")
 
-    # Else create new topic
-    new_topic = await bot.create_forum_topic(chat_id, thread_name)
-    topic_cache[thread_name] = new_topic.message_thread_id
-    return new_topic.message_thread_id
+    # 3. Nahi mila to new topic banao
+    try:
+        new_topic: ForumTopic = await bot.create_forum_topic(chat_id, thread_name)
+        topic_cache[thread_name] = new_topic.message_thread_id
+        return new_topic.message_thread_id
+    except Exception as e:
+        print(f"❌ Failed to create topic '{thread_name}': {e}")
+        return None
+        
+topic_cache = {}  # Store thread_name -> message_thread_id mapping
 
 # Same AES Key aur IV jo encryption ke liye use kiya tha
 KEY = b'^#^#&@*HDU@&@*()'   
@@ -335,7 +356,7 @@ async def send_doc(bot: Client, m: Message, cc, ka, cc1, prog, count, name, repl
     start_time = time.time()
 
     await bot.send_document(
-        chat_id=m.chat.id,
+        chat_id,
         document=ka,
         caption=cc1,
         reply_markup=reply_markup,
@@ -442,7 +463,7 @@ async def send_vid(bot: Client, m: Message, cc, filename, thumb, name, prog, rep
 
     try:
         await bot.send_video(
-            chat_id=m.chat.id,
+            chat_id,
             video=filename,
             caption=cc,
             supports_streaming=True,
@@ -457,7 +478,7 @@ async def send_vid(bot: Client, m: Message, cc, filename, thumb, name, prog, rep
         )
     except Exception:
         await bot.send_document(
-            chat_id=m.chat.id,
+            chat_id,
             document=filename,
             caption=cc1,
             reply_markup=reply_markup,
