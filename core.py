@@ -114,6 +114,14 @@ async def download(url,name):
                 await f.close()   
     return ka   
    
+def extract_subject_name_url(line: str):
+    try:
+        name, url = line.strip().split(":", 1)
+        subject = name.split("-")[0].strip()
+        return subject, name.strip(), url.strip()
+    except Exception as e:
+        print(f"❌ Failed to extract from line: {line} | Error: {e}")
+        return None, None, None
 async def pdf_download(url, file_name, chunk_size=1024 * 10):
     if os.path.exists(file_name):
         os.remove(file_name)
