@@ -328,17 +328,27 @@ async def download_video(url,cmd, name):
     except FileNotFoundError as exc:   
         return os.path.isfile.splitext[0] + "." + "mp4"   
    
-async def send_doc(bot: Client, m: Message,cc,ka,cc1,prog,count,name,reply_markup= None):   
-    reply = await m.reply_text(f"Uploading - `{name}`")   
-    time.sleep(1)   
-    start_time = time.time()   
-    await m.reply_document(ka,caption=cc1, reply_markup=None)   
-    count+=1   
-    await reply.delete (True)   
-    time.sleep(1)   
-    os.remove(ka)   
-    time.sleep(2)
+async def send_doc(bot: Client, m: Message, cc, ka, cc1, prog, count, name, reply_markup=None, message_thread_id=None):
+    reply = await m.reply_text(f"Uploading - `{name}`")
+    await asyncio.sleep(1)
 
+    start_time = time.time()
+
+    await bot.send_document(
+        chat_id=m.chat.id,
+        document=ka,
+        caption=cc1,
+        reply_markup=reply_markup,
+        message_thread_id=message_thread_id  # ✅ Send in specific topic/thread
+    )
+
+    count += 1
+    await reply.delete(True)
+    await asyncio.sleep(1)
+
+    if os.path.exists(ka):
+        os.remove(ka)
+    await asyncio.sleep(2)
 def decrypt_file(file_path, key):  
     if not os.path.exists(file_path): 
         return False  
@@ -403,36 +413,64 @@ def get_next_emoji():
     return emoji
 
 
-async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog, reply_markup=None):   
-       
+async def send_vid(bot: Client, m: Message, cc, filename, thumb, name, prog, reply_markup=None, message_thread_id=None):
     emoji = get_next_emoji()
-    subprocess.run(f'ffmpeg -i "{filename}" -ss 00:00:02 -vframes 1 "{filename}.jpg"', shell=True)   
-    await prog.delete (True)   
-    reply = await m.reply_text(f"**📤 🅤︎Ⓟ︎🅛︎Ⓞ︎🅐︎Ⓓ︎🅘︎Ⓝ︎🅖︎....**\n\n **📦 🅣︎ɪᴛʟⒺ︎ =`{name}`**\n\n**╭━━━━━━━━━◆✯◆━━━━━━━━━╮**\n**⚡ MADE BY : 𝙇𝙐𝘾𝙄𝙁𝙀𝙍 💀**\n**╰━━━━━━━━━◆✯◆━━━━━━━━━╯**")   
-    try:   
-        if thumb == "no":   
-            thumbnail = f"{filename}.jpg"   
-        else:   
-            thumbnail = thumb   
-    except Exception as e:   
-        await m.reply_text(str(e))   
-   
+
+    # Thumbnail generate
+    subprocess.run(f'ffmpeg -i "{filename}" -ss 00:00:02 -vframes 1 "{filename}.jpg"', shell=True)
+
+    await prog.delete(True)
+
+    reply = await m.reply_text(
+        f"**📤 🅤︎Ⓟ︎🅛︎Ⓞ︎🅐︎Ⓓ︎🅘︎Ⓝ︎🅖︎....**\n\n"
+        f"**📦 🅣︎ɪᴛʟⒺ︎ =`{name}`**\n\n"
+        "**╭━━━━━━━━━◆✯◆━━━━━━━━━╮**\n"
+        "**⚡ MADE BY : 𝙇𝙐𝘾𝙄𝙁𝙀𝙍 💀**\n"
+        "**╰━━━━━━━━━◆✯◆━━━━━━━━━╯**"
+    )
+
+    # Thumbnail check
+    try:
+        thumbnail = f"{filename}.jpg" if thumb == "no" else thumb
+    except Exception as e:
+        await m.reply_text(str(e))
+        return
+
     dur = int(duration(filename))
-    processing_msg = await m.reply_text(emoji) 
-   
-    start_time = time.time()   
-   
-    try:   
-        await m.reply_video(filename,caption=cc, supports_streaming=True,height=720,width=1280,thumb=thumbnail,duration=dur, progress=progress_bar,progress_args=(reply,start_time),reply_markup=None)   
-    except Exception:   
-        await m.reply_document(filename,caption=cc, progress=progress_bar,progress_args=(reply,start_time),reply_markup=None)   
-    os.remove(filename)   
-   
-    os.remove(f"{filename}.jpg")
+    processing_msg = await m.reply_text(emoji)
+    start_time = time.time()
+
+    try:
+        await bot.send_video(
+            chat_id=m.chat.id,
+            video=filename,
+            caption=cc,
+            supports_streaming=True,
+            height=720,
+            width=1280,
+            thumb=thumbnail,
+            duration=dur,
+            progress=progress_bar,
+            progress_args=(reply, start_time),
+            reply_markup=reply_markup,
+            message_thread_id=message_thread_id  # ✅ Forum thread/topic ID
+        )
+    except Exception:
+        await bot.send_document(
+            chat_id=m.chat.id,
+            document=filename,
+            caption=cc1,
+            reply_markup=reply_markup,
+            message_thread_id=message_thread_id  # ✅ Fallback to doc in same thread
+        )
+
+    if os.path.exists(filename):
+        os.remove(filename)
+    if os.path.exists(f"{filename}.jpg"):
+        os.remove(f"{filename}.jpg")
+
     await processing_msg.delete(True)
-    await reply.delete (True) 
-
-
+    await reply.delete(True)
 async def watermark_pdf(file_path, watermark_text):
     def create_watermark(text):
         """Create a PDF watermark using ReportLab."""
