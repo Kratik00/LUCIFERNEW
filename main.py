@@ -99,25 +99,6 @@ async def restart_handler(_, m):
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
-topic_cache = {}  # Store thread_name -> message_thread_id mapping
-
-async def get_or_create_topic(bot: Client, chat_id: int, thread_name: str) -> int:
-    if thread_name in topic_cache:
-        return topic_cache[thread_name]
-
-    # Get all threads
-    threads = await bot.get_forum_topic_list(chat_id)
-    for t in threads:
-        if t.name == thread_name:
-            topic_cache[thread_name] = t.message_thread_id
-            return t.message_thread_id
-
-    # Else create new topic
-    new_topic = await bot.create_forum_topic(chat_id, thread_name)
-    topic_cache[thread_name] = new_topic.message_thread_id
-    return new_topic.message_thread_id
-
-
 # Sudo command to add/remove sudo users
 @bot.on_message(filters.command("sudo"))
 async def sudo_command(bot: Client, message: Message):
